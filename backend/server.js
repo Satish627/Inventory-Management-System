@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
+const errorHandler = require("./middleware/errorHandler.js")
 
 const userRoute = require("./routes/userRoute.js") 
 
@@ -15,6 +16,8 @@ app.use(express.json())
 app.use(bodyParser.json())
 app.use(express.urlencoded({extended:false}))
 
+//Error handler middleware
+app.use(errorHandler)
 // connect to mongodb and start server
 mongoose
     .connect(process.env.MONGODB_URL)

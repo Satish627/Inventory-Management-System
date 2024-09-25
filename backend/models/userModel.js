@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose")
 
 const userSchema = mongoose.Schema({
     name: {
@@ -20,8 +20,7 @@ const userSchema = mongoose.Schema({
     },
     photo: {
         type: String,
-        required: [true, "Please add a photo"],
-        default: " "
+        default: ""
     },
     phone: {
         type: String,
@@ -37,4 +36,4 @@ const userSchema = mongoose.Schema({
 )
 
 const User = mongoose.model("User", userSchema)
-export default User
+module.exports =  User
