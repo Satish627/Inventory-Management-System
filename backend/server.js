@@ -4,6 +4,7 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const errorHandler = require("./middleware/errorHandler.js")
+const cookieHandler = require("cookie-parser")
 
 const userRoute = require("./routes/userRoute.js") 
 
@@ -13,8 +14,10 @@ const PORT = process.env.PORT || 5001 ;
 
 //middlewares
 app.use(express.json())
+app.use(cookieHandler())
 app.use(bodyParser.json())
 app.use(express.urlencoded({extended:false}))
+app.use(cors())
 
 //Error handler middleware
 app.use(errorHandler)
