@@ -123,5 +123,20 @@ const getUser = asyncHandler( async (req, res)=>{
         throw new Error("User not found")
     }})
 
-module.exports = { registerUser, loginUser, logout,getUser }
+    const loggedinStatus = asyncHandler(
+        async(req,res)=> {
+            const token = req.cookies.token
+
+            if(!token){
+                return res.json(false)
+            }
+            const verifyToken = jwt.verify(token, process.env.JWT_SECRET)
+            if(verifyToken){
+                return res.json(true)
+            }
+            res.json(false)
+        }
+    )
+
+module.exports = { registerUser, loginUser, logout,getUser, loggedinStatus }
 

@@ -1,6 +1,6 @@
 const express = require("express") 
 
-const {registerUser, loginUser, logout, getUser} = require("../controllers/userController.js")
+const {registerUser, loginUser, logout, getUser, loggedinStatus} = require("../controllers/userController.js")
 const protectUser = require("../middleware/authUser.js")
 
 
@@ -10,6 +10,7 @@ router.post("/register", registerUser)
 router.post("/login", loginUser)
 router.get("/logout", logout)
 router.get("/getuser",protectUser, getUser)
+router.get("/loggedinStatus", loggedinStatus)
 
 
 
