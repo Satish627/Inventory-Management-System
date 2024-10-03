@@ -137,6 +137,47 @@ const getUser = asyncHandler( async (req, res)=>{
             res.json(false)
         }
     )
+const updateUser = asyncHandler(async(req,res) => {
+        console.log("Update request body:", req.body); // Log the request body
+    
+        const user = await User.findById(req.user._id)
+        if (user) {
+            console.log("User before update:", user); // Log the user before update
+    
+            const { name, email, photo, phone, bio } = req.body
+            
+            // Update fields if they are provided in the request
+            if (name) user.name = name;
+            if (email) user.email = email;
+            if (photo) user.photo = photo;
+            if (phone) user.phone = phone;
+            if (bio) user.bio = bio;
+    
+            console.log("User after applying updates:", user); // Log the user after applying updates
+    
+            try {
+                const updatedUser = await user.save()
+                console.log("User after save:", updatedUser); // Log the user after save
+    
+                res.status(200).json({
+                    _id: updatedUser._id,
+                    name: updatedUser.name,
+                    email: updatedUser.email,
+                    photo: updatedUser.photo,
+                    phone: updatedUser.phone,
+                    bio: updatedUser.bio
+                })
+            } catch (error) {
+                console.error("Error saving user:", error); // Log any save errors
+                res.status(400)
+                throw new Error("Failed to update user: " + error.message)
+            }
+        } else {
+            res.status(404)
+            throw new Error("User not found")
+        }
+    }
+)
 
-module.exports = { registerUser, loginUser, logout,getUser, loggedinStatus }
+module.exports = { registerUser, loginUser, logout,getUser, loggedinStatus, updateUser }
 
